@@ -3,14 +3,67 @@
 :additional_repos: []
 :included_repos: []
 :excluded_repos:
-- ManageIQ/integration_tests
-- ManageIQ/manageiq-appliance-dev-setup
+- ManageIQ/manageiq_build_status
 - ManageIQ/manageiq-performance
 - ManageIQ/manageiq-release
 - ManageIQ/manageiq-vagrant-dev
-- ManageIQ/miq_tools_services
-- ManageIQ/polisher
+- ManageIQ/manageiq.org
 - ManageIQ/sprint_statistics
+# Providers
+- ManageIQ/manageiq-providers-amazon
+- ManageIQ/manageiq-providers-ansible_tower
+- ManageIQ/manageiq-providers-autosde
+- ManageIQ/manageiq-providers-awx
+- ManageIQ/manageiq-providers-azure
+- ManageIQ/manageiq-providers-azure_stack
+- ManageIQ/manageiq-providers-cisco_intersight
+- ManageIQ/manageiq-providers-dummy_provider
+- ManageIQ/manageiq-providers-embedded_terraform
+- ManageIQ/manageiq-providers-foreman
+- ManageIQ/manageiq-providers-google
+- ManageIQ/manageiq-providers-ibm_cic
+- ManageIQ/manageiq-providers-ibm_cloud
+- ManageIQ/manageiq-providers-ibm_power_hmc
+- ManageIQ/manageiq-providers-ibm_power_vc
+- ManageIQ/manageiq-providers-ibm_terraform
+- ManageIQ/manageiq-providers-kubernetes
+- ManageIQ/manageiq-providers-kubevirt
+- ManageIQ/manageiq-providers-lenovo
+- ManageIQ/manageiq-providers-nsxt
+- ManageIQ/manageiq-providers-nuage
+- ManageIQ/manageiq-providers-nutanix
+- ManageIQ/manageiq-providers-openshift
+- ManageIQ/manageiq-providers-openstack
+- ManageIQ/manageiq-providers-oracle_cloud
+- ManageIQ/manageiq-providers-ovirt
+- ManageIQ/manageiq-providers-redfish
+- ManageIQ/manageiq-providers-red_hat_virtualization
+- ManageIQ/manageiq-providers-terraform_enterprise
+- ManageIQ/manageiq-providers-scvmm
+- ManageIQ/manageiq-providers-vmware
+- ManageIQ/manageiq-providers-workflows
+# Provider gems
+- ManageIQ/floe
+- ManageIQ/kubeclient
+- ManageIQ/vmware_web_service
+- ManageIQ/rbvmomi2
+# # UI
+- ManageIQ/manageiq-ui-classic
+- ManageIQ/manageiq-ui-service
+- ManageIQ/ui-components
+# Core
+# - ManageIQ/activerecord-virtual_attributes
+# - ManageIQ/guides
+# - ManageIQ/manageiq
+# - ManageIQ/manageiq-content
+# - ManageIQ/manageiq-documentation
+# - ManageIQ/manageiq-gems-pending
+# - ManageIQ/manageiq-pods
+# - ManageIQ/manageiq-schema
+# - ManageIQ/manageiq-style
+# - ManageIQ/manageiq.org
+# - ManageIQ/miq_bot
+# - ManageIQ/multi_repo
 :priority:
 - :prefix: E
   :label: enhancement

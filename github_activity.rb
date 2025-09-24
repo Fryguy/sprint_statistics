@@ -8,6 +8,7 @@ gemfile do
   gem "multi_repo", :require => "multi_repo/cli"
   gem "octokit"
   gem "optimist"
+  gem "faraday", "<2"
 end
 
 require_relative 'sprint_statistics'
@@ -17,6 +18,9 @@ require 'yaml'
 
 class GithubActivity
   attr_reader :opts, :config, :sprint
+
+  LARGE_REPOS = %w[ManageIQ/manageiq ManageIQ/manageiq-ui-classic].freeze
+  LARGE_REPO_EXCLUDES = LARGE_REPOS.map { |r| "-repo:#{r}" }.join(" ").freeze
 
   def initialize(opts)
     @opts = opts
@@ -56,8 +60,10 @@ class GithubActivity
 
   def execute_query(query)
     begin
+      puts "GitHub query=#{query.inspect}".light_black
       results = stats.client.search_issues(query)
-      puts "GitHub query=#{query.inspect} returned #{results.total_count} items".light_black
+      puts "  returned #{results.total_count} items".light_black
+      # binding.irb
       #puts "query results=#{results.inspect}"
       results.items
     rescue Octokit::TooManyRequests => err
@@ -75,8 +81,9 @@ class GithubActivity
   end
 
   def execute_query_in_repo_or_org(repo, query)
-    if repo_in_org?(repo, @github_org)
-      results = cached_execute_query "org:#{@github_org} #{query}"
+    if repo_in_org?(repo, @github_org) && !LARGE_REPOS.include?(repo)
+      results = cached_execute_query "org:#{@github_org} #{LARGE_REPO_EXCLUDES} #{query}"
+      # binding.irb
       results.select { |pr| pr.repository_url.end_with?(repo) }
     else
       cached_execute_query "repo:#{repo} #{query}"
@@ -136,7 +143,13 @@ class GithubActivity
   end
 
   def issues_created_during_sprint(repo)
-    execute_query_in_repo_or_org(repo, "type:issue #{created_during_sprint_query}")
+    issues_created_before_sprint_end(repo).select do |i|
+      i.created_at < @sprint.ended_iso8601
+    end
+  end
+
+  def issues_created_before_sprint_end(repo)
+    execute_query_in_repo_or_org(repo, "type:issue created:<=#{@sprint.ended_iso8601}")
   end
 
   LABELS  = ["bug", "enhancement", "developer", "documentation", "performance", "refactoring", "technical debt", "test"]
@@ -183,7 +196,14 @@ class GithubActivity
     result['closed'] = issues_closed.collect(&:number).sort
     counts['closed'] = issues_closed.length
 
-    result['counts'] = counts
+    # result['all'] = issues_created_before_sprint_end(repo)
+
+    # binding.irb
+
+    # result['counts'] = counts
+
+    # pp result
+
     result
   end
 
